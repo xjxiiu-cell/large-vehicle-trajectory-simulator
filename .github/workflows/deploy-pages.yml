@@ -23,15 +23,20 @@ jobs:
     steps:
       - name: 获取代码
         uses: actions/checkout@v4
+      - name: 配置 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
       - name: 配置 Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
       - name: 安装依赖
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: 构建网站
-        run: npm run build
+        run: pnpm build
       - name: 配置 Pages
         uses: actions/configure-pages@v5
       - name: 上传静态网站
